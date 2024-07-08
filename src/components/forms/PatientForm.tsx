@@ -6,29 +6,13 @@ import { z } from "zod"
 import {
   Form,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { CustomFormField } from "../CustomFormField"
 import { SubmitButton } from "../SubmitButton"
 import { useState } from "react"
 import { UserFormValidation } from "@/lib/validation"
 import { useRouter } from "next/navigation"
 import { createUser } from "@/lib/actions/patient.actions"
+import CustomFormField, { FormFieldType } from "../CustomFormField"
 
-export enum FormFieldType {
-  INPUT = "input",
-  TEXTAREA = "textarea",
-  PHONE_INPUT = "phone_input",
-  CHECKBOX = "checkbox",
-  DATE_PICKER = "datepicker",
-  SELECT = "select",
-  SKELETON = "skeleton",
-}
-
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-})
 
 const PatientForm = () => {
   const router = useRouter();
@@ -62,7 +46,8 @@ const PatientForm = () => {
       if(user) {
         setIsLoading(false)
       }
-      // if(user) router.push(`/patients/${user?.id}/register`)
+      if(user) router.push(`/patients/${user?.id}/register`)
+        
     } catch (error) {
       console.log("Error: ", error)
     } finally {
@@ -84,7 +69,7 @@ const PatientForm = () => {
           name="name"
           label="Full Name"
           placeholder="Enter your full name"
-          iconStr="/assets/icons/user.svg"
+          iconSrc="/assets/icons/user.svg"
           iconAlt="user"
         />
         <CustomFormField
@@ -93,7 +78,7 @@ const PatientForm = () => {
           name="email"
           label="Email"
           placeholder="Enter your email"
-          iconStr="/assets/icons/email.svg"
+          iconSrc="/assets/icons/email.svg"
           iconAlt="email"
         />
         <CustomFormField
@@ -102,7 +87,7 @@ const PatientForm = () => {
           name="phone"
           label="Phone"
           placeholder="(+91) 91xxxxxxxxx"
-          // iconStr="/assets/icons/email.svg"
+          // iconSrc="/assets/icons/email.svg"
           // iconAlt="email"
         />
         <SubmitButton isLoading={isLoading}>
